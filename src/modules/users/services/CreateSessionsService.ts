@@ -3,6 +3,7 @@ import { sign } from "jsonwebtoken";
 import { getCustomRepository } from "typeorm";
 
 import AppError from "../../../shared/errors/AppError";
+import authConfig from "../../../config/auth";
 
 import UserRepository from "../typeorm/repositories/UserRepository";
 import User from "../typeorm/entities/Users";
@@ -32,9 +33,10 @@ class CreateSessionService {
     }
 
     // aca configuro el JWT
-    const token = sign({}, "719b6bf76b02b5a028767427542edb07", {
+    // TODO: pasar a una variable de entorno el valor de abajo
+    const token = sign({}, authConfig.jwt.secret, {
       subject: user.id,
-      expiresIn: "1d",
+      expiresIn: authConfig.jwt.expiresIn,
     });
     return { user, token };
   }
