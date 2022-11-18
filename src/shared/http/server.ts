@@ -7,6 +7,7 @@ import cors from "cors";
 
 import routes from "./routes";
 import AppError from "../errors/AppError";
+import uploadConfig from "../../config/upload";
 
 // llamo al metodo createConnection de typeORM para establecer la conexion
 import "../typeorm";
@@ -15,6 +16,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/files", express.static(uploadConfig.directory));
 
 // rutas de los endpoints
 app.use(routes);
