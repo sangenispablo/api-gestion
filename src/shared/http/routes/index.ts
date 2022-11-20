@@ -1,4 +1,4 @@
-import { Router, Response, Request } from "express";
+import { Router } from "express";
 
 import productsRouter from "../../../modules/products/routes/products.routes";
 import sessionsRouter from "../../../modules/users/routes/sessions.routes";
