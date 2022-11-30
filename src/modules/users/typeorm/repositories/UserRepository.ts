@@ -19,7 +19,6 @@ class UserRepository extends Repository<User> {
         id,
       },
     });
-
     return user;
   }
 }
