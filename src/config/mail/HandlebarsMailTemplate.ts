@@ -1,19 +1,21 @@
 import handlebars from "handlebars";
 
-interface ITemplateVars {
+/*
+  Cuando queremos pasar un grupo de variables pero no sabemos cuantas y como se llaman
+  podemos usar esta forma para pasarlas
+*/
+export interface ITemplateVars {
   [key: string]: string | number;
 }
 
-interface IParseMailTemplate {
+export interface IParseMailTemplate {
   template: string,
   vars: ITemplateVars,
 }
 
-class HandlebarsMailTemplate {
-  public async parse({template, vars}: IParseMailTemplate): Promise<string> {
+export class HandlebarsMailTemplate {
+  public async parse({ template, vars }: IParseMailTemplate): Promise<string> {
     const parseTemplate = handlebars.compile(template);
     return parseTemplate(vars);
   }
 }
-
-export default HandlebarsMailTemplate;
