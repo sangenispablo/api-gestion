@@ -17,15 +17,24 @@ class SendForgortPasswordService {
     const userTokensRepository = getCustomRepository(UserTokensRepository);
 
     const user = await userRepository.findByEmail(email);
+
     if (!user) {
       throw new AppError("User does not extists.");
     }
 
-    const userToken = await userTokensRepository.generate(user.id);
-    // console.log(token);
+    const { token } = await userTokensRepository.generate(user.id);
+
     await EtherealMail.sendMail({
-      to: email,
-      body: `Se solicito cambio de contraseña: ${userToken?.token}`
+      to: { name: user.name, email: user.email },
+      from: { name: "Soporte API Gestion", email: "soporte@pas.ar" },
+      subject: "[API Gestion] Recuperación de Contraseña",
+      templateData: {
+        template: `Hola {{name}} tu token: {{token}}`,
+        vars: {
+          name: user.name,
+          token,
+        }
+      }
     });
   }
 }
